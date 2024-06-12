@@ -1,0 +1,1136 @@
+{
+	"info": {
+		"_postman_id": "32a97260-fde6-4bda-a82d-0e1723f7b6be",
+		"name": "Review Reply",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27530546",
+		"_collection_link": "https://mp-cc-services.postman.co/workspace/Web---Haustier~d4b8b07f-c5dd-4128-acc4-2d7729cc298b/collection/27530546-32a97260-fde6-4bda-a82d-0e1723f7b6be?action=share&source=collection_link&creator=27530546"
+	},
+	"item": [
+		{
+			"name": "Review Reply API test",
+			"item": [
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"user_id\", data.id);\r",
+									"pm.globals.set(\"user_name\", data.username);\r",
+									"pm.globals.set(\"user_password\", data.password);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Marta reply to review test\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"user_token\", data.token);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"{{user_name}}\",\r\n\r\n\r\n  \"password\": \"{{user_password}}\"\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/login",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createReview",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"review_id\", data.id);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"Esta es una review mu y review de mi parte\",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\",\r\n    \"stars\":4\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add reply to review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"reply_id_1\", data.replies[data.replies.length -1].id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add reply to review2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"reply_id_2\", data.replies[data.replies.length -1].id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply 2 \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add invalid reply to review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"\",\r\n\r\n    \"time\": \"\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add reply to invalid review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"muy buena compra\",\r\n\r\n    \"time\": \"2023/12/23\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/4c3c33ff-0571-4952-87fc-ea0aa754030d/replies",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find reviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"reply_id\", data.id);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find reply from review 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/{{reply_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"{{reply_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find reply from review 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/{{reply_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"{{reply_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find invalid reply from review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find  reply from invalid review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/4c3c33ff-0571-4952-87fc-ea0aa754030d/replies/{{reply_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"replies",
+								"{{reply_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update reply 1 to review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a update reply  \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/{{reply_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"{{reply_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update reply 2 to review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a update reply 2 \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/{{reply_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"{{reply_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update reply 2 to invalid review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a update reply 2 \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/4c3c33ff-0571-4952-87fc-ea0aa754030d/replies/{{reply_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"replies",
+								"{{reply_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update invalid reply",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a update reply 2 \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check reviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"reply_id\", data.id);\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete reply1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 204\", function () {\r",
+									"   pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/{{reply_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"{{reply_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete reply2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 204\", function () {\r",
+									"   pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/{{reply_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"{{reply_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete invalid reply",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/{{review_id}}/replies/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"{{review_id}}",
+								"replies",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete invalid reply2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/reviews/4c3c33ff-0571-4952-87fc-ea0aa754030d/replies/{{reply_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"replies",
+								"{{reply_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"key": "host",
+			"value": "localhost",
+			"type": "string"
+		}
+	]
+}

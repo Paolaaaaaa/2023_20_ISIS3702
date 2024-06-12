@@ -1,0 +1,1439 @@
+{
+	"info": {
+		"_postman_id": "4176a94f-321f-4e32-97d4-32b14d15800f",
+		"name": "User",
+		"description": "Diseño para el recurso Review.\n\nAsignado a : Paola Andrea Campiño\n\n- GET\n    \n- POST\n    \n- PUT\n    \n- DEL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27530546",
+		"_collection_link": "https://mp-cc-services.postman.co/workspace/Web---Haustier~d4b8b07f-c5dd-4128-acc4-2d7729cc298b/collection/27530546-4176a94f-321f-4e32-97d4-32b14d15800f?action=share&source=collection_link&creator=27530546"
+	},
+	"item": [
+		{
+			"name": "User API Test",
+			"item": [
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"user_id\", data.id);\r",
+									"pm.globals.set(\"user_name\", data.username);\r",
+									"pm.globals.set(\"user_password\", data.password);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"msandia@gmail.com\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"user_token\", data.token);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"{{user_name}}\",\r\n\r\n\r\n  \"password\": \"{{user_password}}\"\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/login",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"admin_id\", data.id);\r",
+									"pm.globals.set(\"admin_name\", data.username);\r",
+									"pm.globals.set(\"admin_password\", data.password);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Admin\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Admin\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"admin_token\", data.token);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"{{admin_name}}\",\r\n\r\n\r\n  \"password\": \"{{admin_password}}\"\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/login",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserInvalid Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"name\": \"Marta Sandia\",\r\n\r\n  \"email\": \"\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserInvalid Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"name\": \"\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserInvalid Rol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"name\": \"Marta Sandia\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserInvalid password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"name\": \"Marta Sandia\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers as ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Number of users > ' + 0, function () {\r",
+									"   var data = pm.response.json()\r",
+									"   pm.expect(data.length).to.greaterThan(0)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n  \"username\": \"{{admin_name}}\",\r\n  \"password\": \"{{admin_password}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers as user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 401\", function () {\r",
+									"   pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n  \"username\": \"{{user_name}}\",\r\n  \"password\": \"{{user_password}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n  \"username\": \"{{admin_name}}\",\r\n  \"password\": \"{{admin_password}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser as User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n  \"username\": \"{{user_name}}\",\r\n  \"password\": \"{{user_password}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{admin_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{admin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n  \"username\": \"{{admin_name}}\",\r\n  \"password\": \"{{admin_password}}\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Marta Sandia\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Nueva contraseña 1234\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser Invalid change of email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 412\", function () {\r",
+									"   pm.response.to.have.status(412);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Marta Sandia\",\r\n\r\n  \"email\": \"nuevo email@gmail.com\",\r\n\r\n  \"password\": \"Nueva contraseña 1234\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser Invalid change of rol",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 412\", function () {\r",
+									"   pm.response.to.have.status(412);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Marta Sandia\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Nueva contraseña 1234\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Administrador\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser Invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Marta Sandia\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Nueva contraseña 1234\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Administrador\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{admin_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{admin_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser Invalid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Design API",
+			"item": [
+				{
+					"name": "GetUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{id_user}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{id_user}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByID invalid id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{invalid_id}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{invalid_id}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"id\": 6,\r\n        \"name\": \"Chryste Mellon\",\r\n        \"email\": \"cmellon5@paypal.com\",\r\n        \"password\": \"vX0'vqs\\\"$%$+z8J\",\r\n        \"user_pic\": \"http://dummyimage.com/228x100.png/5fa2dd/ffffff\",\r\n        \"rol\": \"Surveyor\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User info",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Chryste Mellon\",\r\n        \"email\": \"cmellon5@paypal.com\",\r\n        \"password\": \"vX0'vqs\\\"$%$+z8J\",\r\n        \"user_pic\": \"http://dummyimage.com/228x100.png/5fa2dd/ffffff\",\r\n        \"rol\":\"Cuenta personal\",\r\n        \"id\":12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{id_user}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{id_user}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update rol User info",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Chryste Mellon\",\r\n        \"email\": \"cmellon5@paypal.com\",\r\n        \"password\": \"vX0'vqs\\\"$%$+z8J\",\r\n        \"user_pic\": \"http://dummyimage.com/228x100.png/5fa2dd/ffffff\",\r\n        \"rol\":\"Administrador\",\r\n        \"id\":12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{id_user}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{id_user}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update id User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Chryste Mellon\",\r\n        \"email\": \"cmellon5@paypal.com\",\r\n        \"password\": \"vX0'vqs\\\"$%$+z8J\",\r\n        \"user_pic\": \"http://dummyimage.com/228x100.png/5fa2dd/ffffff\",\r\n        \"rol\":\"Administrador\",\r\n        \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{id_user}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{id_user}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update to existing email User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Chryste Mellon\",\r\n        \"email\": \"existing@gmail.com\",\r\n        \"password\": \"vX0'vqs\\\"$%$+z8J\",\r\n        \"user_pic\": \"http://dummyimage.com/228x100.png/5fa2dd/ffffff\",\r\n         \"rol\":\"Cuenta personal\",\r\n        \"id\":12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{id_user}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{id_user}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update invalid User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Chryste Mellon\",\r\n        \"email\": \"ng@gmail.com\",\r\n        \"password\": \"vX0'vqs\\\"$%$+z8J\",\r\n        \"user_pic\": \"http://dummyimage.com/228x100.png/5fa2dd/ffffff\",\r\n         \"rol\":\"Cuenta personal\",\r\n         \"id\":0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{invalid_id}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{invalid_id}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RemoveUserByID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{id_user}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{id_user}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RemoveReviewByID invalid id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://my.api.mockaroo.com/v1/users/{{invalid_id}}.json?key=3bca9370",
+							"protocol": "https",
+							"host": [
+								"my",
+								"api",
+								"mockaroo",
+								"com"
+							],
+							"path": [
+								"v1",
+								"users",
+								"{{invalid_id}}.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "3bca9370"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id_user",
+			"value": "12",
+			"type": "string"
+		},
+		{
+			"key": "invalid_id",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"key": "host",
+			"value": "localhost",
+			"type": "string"
+		}
+	]
+}

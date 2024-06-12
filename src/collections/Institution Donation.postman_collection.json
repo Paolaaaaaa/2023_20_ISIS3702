@@ -1,0 +1,1088 @@
+{
+	"info": {
+		"_postman_id": "ff69cce0-3435-47e0-afe2-893b315cb5bb",
+		"name": "Institution Donation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27530546",
+		"_collection_link": "https://mp-cc-services.postman.co/workspace/Web---Haustier~d4b8b07f-c5dd-4128-acc4-2d7729cc298b/collection/27530546-ff69cce0-3435-47e0-afe2-893b315cb5bb?action=share&source=collection_link&creator=27530546"
+	},
+	"item": [
+		{
+			"name": "Institution Donation API test Copy",
+			"item": [
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"user_id\", data.id);\r",
+									"pm.globals.set(\"user_name\", data.username);\r",
+									"pm.globals.set(\"user_password\", data.password);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"Marta reply to review test\",\r\n\r\n  \"email\": \"msandia@gmail.com\",\r\n\r\n  \"password\": \"Password1235\",\r\n\r\n  \"image\": \"https://imgaelink.com\",\r\n\r\n  \"rol\": \"Personal Account\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"user_token\", data.token);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"username\": \"{{user_name}}\",\r\n\r\n\r\n  \"password\": \"{{user_password}}\"\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/login",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createInstitution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"institution_id\", data.id);\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Nombre de la Institución\",\r\n  \"address\": \"Dirección de la Institución\",\r\n  \"phone\": \"Número de teléfono\",\r\n  \"email\": \"correo@ejemplo.com\",\r\n  \"yearsOfExistence\": 10,\r\n  \"schedule\": \"Horario de la Institución\",\r\n  \"type\": \"Tipo de Institución\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add donation to institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"donations_id_1\", data.donations[data.donations.length -1].id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"total\": 37000\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add donation 2 to institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.globals.set(\"donations_id_2\", data.donations[data.donations.length -1].id);\r",
+									"\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"   pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"total\": 2000\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add invalid donation to institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"   pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"total\": null\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add donation to invalid institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n\"total\":890890\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/4c3c33ff-0571-4952-87fc-ea0aa754030d/donations/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"donations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find donations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find donation 1 from institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/{{donations_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"{{donations_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find donation 2 from institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/{{donations_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"{{donations_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find donation  from invalid institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/4c3c33ff-0571-4952-87fc-ea0aa754030d/donations/{{donations_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"donations",
+								"{{donations_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find invalid donation from institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find donations from invalid institution",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/4c3c33ff-0571-4952-87fc-ea0aa754030d/donations/",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d",
+								"donations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Action  update reply 1 to review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a update reply  \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/{{donations_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"{{donations_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check donations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\r\n  \"review\": \"this is a reply \",\r\n\r\n    \"time\": \"27-02-2020 01:08:51\"\r\n\r\n\r\n\r\n\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete donation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 204\", function () {\r",
+									"   pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/{{donations_id_1}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"{{donations_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete donation 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 204\", function () {\r",
+									"   pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/{{donations_id_2}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"{{donations_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete invalid donation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"   pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/institutions/{{institution_id}}/donations/4c3c33ff-0571-4952-87fc-ea0aa754030d",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"institutions",
+								"{{institution_id}}",
+								"donations",
+								"4c3c33ff-0571-4952-87fc-ea0aa754030d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{port}}/api/v1/users/{{user_id}}",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"key": "host",
+			"value": "localhost",
+			"type": "string"
+		}
+	]
+}

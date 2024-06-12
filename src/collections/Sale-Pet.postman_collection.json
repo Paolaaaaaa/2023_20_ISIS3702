@@ -1,0 +1,841 @@
+{
+	"info": {
+		"_postman_id": "f82e51c4-1ce1-40fc-8d47-fedf9de9719b",
+		"name": "Sale-Pet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23160823"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json(); // Obtén la respuesta como JSON\r",
+							"\r",
+							"// Asume que el ID del usuario se devuelve en un campo 'id' en la respuesta del servidor\r",
+							"if (responseData && responseData.id) {\r",
+							"    pm.environment.set(\"user_id\", responseData.id);\r",
+							"}\r",
+							"\r",
+							"// El resto del código permanece igual\r",
+							"var request_body = pm.request.body.raw;\r",
+							"var body_object = JSON.parse(request_body);\r",
+							"\r",
+							"pm.environment.set(\"username\", body_object.username);\r",
+							"pm.environment.set(\"password\", body_object.password);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"newuser\",\r\n  \"email\": \"newuser@example.com\",\r\n  \"password\": \"newuserpassword\",\r\n  \"image\": \"userimageurl\", // if applicable\r\n  \"rol\": \"Admin\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/users",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// This script runs after the request is sent and the response is received\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var jsonResponse = pm.response.json(); // Parse the JSON response\r",
+							"if(jsonResponse.token) { // Replace 'token' with the actual key that contains the JWT\r",
+							"    pm.environment.set(\"jwt_token\", jsonResponse.token); // Save the token as an environment variable\r",
+							"} else {\r",
+							"    console.log(\"Token not found in response\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/users/login",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostSale",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.environment.set(\"sale_id\", responseData.id); // Save the pet ID as an environment variable\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"total\": 1000,\r\n  \"type\": \"Sale\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/sales",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostPet1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.environment.set(\"pet_id\", responseData.id); // Save the pet ID as an environment variable\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Buddy\",\r\n  \"price\": 300,\r\n  \"age\": 3,\r\n  \"race\": \"Labrador\",\r\n  \"specie\": \"Perro\",\r\n  \"color\": \"Golden\",\r\n  \"description\": \"Friendly and energetic\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/pets",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostPet2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.environment.set(\"pet_id2\", responseData.id); // Save the pet ID as an environment variable\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Max\",\r\n    \"price\": 350,\r\n    \"age\": 2,\r\n    \"race\": \"Labrador\",\r\n    \"specie\": \"Perro\",\r\n    \"color\": \"Black\",\r\n    \"description\": \"Loyal and playful\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/pets",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostSale-Pet",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets/{{pet_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllSalePets",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPetsInvalidSaleID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message is correct\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The sale with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/00000000-0000-0000-0000-000000000000/pets",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"00000000-0000-0000-0000-000000000000",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPetSale",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets/{{pet_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPetSaleInvalidPetID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message is correct\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The pet with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPetSaleInvalidSaleID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message is correct\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The sale with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/00000000-0000-0000-0000-000000000000/pets/{{pet_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"00000000-0000-0000-0000-000000000000",
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSalePets",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n        {\r\n            \"id\": \"{{pet_id}}\", // Sustituye esto por el UUID real de la mascota\r\n            \"name\": \"Buddy\",\r\n            \"price\": 300,\r\n            \"age\": 3,\r\n            \"race\": \"Labrador\",\r\n            \"specie\": \"Perro\",\r\n            \"color\": \"Golden\",\r\n            \"description\": \"Friendly and energetic\"\r\n        },\r\n        {\r\n            \"id\": \"{{pet_id2}}\", // Sustituye esto por el UUID real de la segunda mascota\r\n            \"name\": \"Max\",\r\n            \"price\": 350,\r\n            \"age\": 2,\r\n            \"race\": \"Labrador\",\r\n            \"specie\": \"Perro\",\r\n            \"color\": \"Black\",\r\n            \"description\": \"Loyal and playful\"\r\n        }\r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSalePetsInvalidPet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Error message is correct\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"The pet with the given id was not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n[\r\n        {\r\n            \"id\": \"{{pet_id}}\", // Sustituye esto por el UUID real de la mascota\r\n            \"name\": \"Buddy\",\r\n            \"price\": 300,\r\n            \"age\": 3,\r\n            \"race\": \"Labrador\",\r\n            \"specie\": \"Perro\",\r\n            \"color\": \"Golden\",\r\n            \"description\": \"Friendly and energetic\"\r\n        },\r\n        {\r\n            \"id\": \"00000000-0000-0000-0000-000000000000\", // Sustituye esto por el UUID real de la segunda mascota\r\n        \"name\": \"Charlie\",\r\n        \"price\": 250,\r\n        \"age\": 4,\r\n        \"breed\": \"Beagle\",\r\n        \"species\": \"Dog\",\r\n        \"color\": \"Tricolor\",\r\n        \"description\": \"Curious and loving, great with kids\"\r\n    }\r\n        \r\n    ]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSale-Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets/{{pet_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSale-Pet2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}/pets/{{pet_id2}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}",
+						"pets",
+						"{{pet_id2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/pets/{{pet_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePet2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/pets/{{pet_id2}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"pets",
+						"{{pet_id2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteSale",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/sales/{{sale_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"sales",
+						"{{sale_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_URL}}/users/{{user_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
